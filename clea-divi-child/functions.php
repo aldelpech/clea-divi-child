@@ -38,19 +38,58 @@ include('login-editor.php');
 // To require a file which is somewhere in this child theme directory
 // require_once( trailingslashit( get_stylesheet_directory() ) . 'widgets.php' );
 
-/***** a shortcode to add category title and description ***********/
-function cdc_shortcode($atts = [], $content = null)
-{
+/***** My shortcode with parameters for category title and description ***********/
+// 	[cat_display title="yes" description="yes"] will display both category and description
+// source https://developer.wordpress.org/plugins/shortcodes/enclosing-shortcodes/
 
-	// Display category title and description
+function cdc_cat_title_desc_shortcode( $atts = [], $content = null ) {
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case((array)$atts, CASE_LOWER);
+ 
+    // override default attributes with user attributes
+    $wporg_atts = shortcode_atts( [
+                                     'title' 		=> 'yes',
+									 'description' 	=> 'yes',
+                                 ], $atts );
+ 
+
+	// if all is yes should return both title and description for the category
+	/*
 	$content = '<header class="archive-header">' ;
 	$content .= '<h1 class="entry-title main_title">' . single_cat_title( '', false ) . "</h1>" ;
 	$content .= '<div class="archive-meta">' . category_description() . "</div></header>" ;
+	*/
+	
+	// start output
+    $o = '';
+ 
+    // start box
+    $o .= '<header class="archive-header">';
+ 
+    // title
+	if ( "yes" == $wporg_atts['title'] ) {
+		    $o .= '<h1 class="entry-title main_title">' . single_cat_title( '', false ) . "</h1>";
+	} else {
+		$o .="";
+	}
 
-    // always return
-    return $content;
+	if ( "yes" == $wporg_atts['description'] ) {
+		    $o .= '<div class="archive-meta">' . category_description() . "</div>";
+	} else {
+		$o .="";
+	}
+ 
+    // end box
+    $o .= '</header>';
+ 
+    // return output
+    return $o;
+	
+
 }
-add_shortcode('display_cat_title_description', 'cdc_shortcode');
+ 
+add_shortcode('cat_display', 'cdc_cat_title_desc_shortcode');
+ 
 
 
 // A titre d'essai - ne fonctionne pas... 
