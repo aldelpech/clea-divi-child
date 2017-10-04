@@ -17,4 +17,22 @@ add_action( 'wp_enqueue_scripts', 'ds_ct_enqueue_parent' );
 add_action( 'wp_enqueue_scripts', 'ds_ct_loadjs' );
 
 include('login-editor.php');
+
+
+
+function custom_colors_css() {
+	
+	global $themename, $shortname, $options;
+	$et_theme_options_name = 'et_' . $themename;
+	$al_et_options = get_option( $et_theme_options_name );
+	return $al_et_options ;
+	
+	// divi_color_palette
+	// global $themename
+	// 
+	// global $themename, $shortname, $options;
+	// $et_theme_options_name = 'et_' . $shortname;
+	// $et_theme_options = get_option( $et_theme_options_name );
+}
+
 ?>
