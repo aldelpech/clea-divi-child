@@ -63,6 +63,7 @@ $html = '';
 						<?php if ( category_description() ) : ?>
 						<div class="archive-meta"><?php echo category_description(); ?></div>
 						<?php endif; ?>
+
 					</header>
 					
 					<?php

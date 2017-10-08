@@ -39,7 +39,7 @@ include('login-editor.php');
 // require_once( trailingslashit( get_stylesheet_directory() ) . 'widgets.php' );
 
 /***** My shortcode with parameters for category title and description ***********/
-// 	[cat_display title="yes" description="yes"] will display both category and description
+// 	[cat_display title="yes" centrer="yes" description="yes"] will display both category and description
 // source https://developer.wordpress.org/plugins/shortcodes/enclosing-shortcodes/
 
 function cdc_cat_title_desc_shortcode( $atts = [], $content = null ) {
@@ -49,17 +49,10 @@ function cdc_cat_title_desc_shortcode( $atts = [], $content = null ) {
     // override default attributes with user attributes
     $wporg_atts = shortcode_atts( [
                                      'title' 		=> 'yes',
+									 'centrer'		=> 'yes',
 									 'description' 	=> 'yes',
                                  ], $atts );
  
-
-	// if all is yes should return both title and description for the category
-	/*
-	$content = '<header class="archive-header">' ;
-	$content .= '<h1 class="entry-title main_title">' . single_cat_title( '', false ) . "</h1>" ;
-	$content .= '<div class="archive-meta">' . category_description() . "</div></header>" ;
-	*/
-	
 	// start output
     $o = '';
  
@@ -68,7 +61,12 @@ function cdc_cat_title_desc_shortcode( $atts = [], $content = null ) {
  
     // title
 	if ( "yes" == $wporg_atts['title'] ) {
-		    $o .= '<h1 class="entry-title main_title">' . single_cat_title( '', false ) . "</h1>";
+			
+			if ( "yes" == $wporg_atts['centrer'] ) {
+				$o .= '<h1 class="entry-title main_title" style="text-align:center;">' . single_cat_title( '', false ) . "</h1>";
+			} else {
+				$o .= '<h1 class="entry-title main_title">' . single_cat_title( '', false ) . "</h1>";
+			}
 	} else {
 		$o .="";
 	}
@@ -89,7 +87,7 @@ function cdc_cat_title_desc_shortcode( $atts = [], $content = null ) {
 }
  
 add_shortcode('cat_display', 'cdc_cat_title_desc_shortcode');
- 
+
 
 
 // A titre d'essai - ne fonctionne pas... 
