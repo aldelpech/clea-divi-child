@@ -7,6 +7,8 @@ a child theme for Divi
 
 * Add Category title and description to all category pages (created category.php)**
 
+* if the Categories Image plugin (by Muhammad Said El Zahlan) is used, 
+	then the image associated with the category is displayed. 
 *  
 * 
 *  

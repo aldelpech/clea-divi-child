@@ -63,6 +63,18 @@ $html = '';
 						<?php if ( category_description() ) : ?>
 						<div class="archive-meta"><?php echo category_description(); ?></div>
 						<?php endif; ?>
+						
+						<!-- Display optional category image 
+						     (if Categories Images By Muhammad Said El Zahlan is used) -->
+						<?php 
+						if ( function_exists('z_taxonomy_image') ) {
+							
+							z_taxonomy_image();
+						} else {
+							
+							echo "<h4>No image</h4>" ;
+						} 
+						?>
 
 					</header>
 					

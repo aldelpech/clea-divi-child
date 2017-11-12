@@ -2,7 +2,7 @@
 /**
  * @package    clea-divi-child
  * @subpackage Functions
- * @version    1.0
+ * @version    1.0.1
  * @since      0.1.0
  * @author     Anne-Laure Delpech <ald.kerity@gmail.com>  
  * @copyright  Copyright (c) 2017 7Anne-Laure Delpech
@@ -57,28 +57,69 @@ function cdc_cat_title_desc_shortcode( $atts = [], $content = null ) {
     $o = '';
  
     // start box
-    $o .= '<header class="archive-header">';
- 
-    // title
+    $o .= '<div class="et_pb_section  et_pb_section_0 et_section_regular"><div class=" et_pb_row et_pb_row_0"><div class="et_pb_column et_pb_column_4_4  et_pb_column_0 et-last-child">';
+
+	/* 
+	* @since      1.0.1
+	* Display optional category image 
+	* (if Categories Images By Muhammad Said El Zahlan is used) 
+	* Source http://zahlan.net/blog/2012/06/categories-images/ 
+	*/
+
+	
+	 $img_cat = "" ;
+	if ( function_exists( 'z_taxonomy_image_url' ) ) {
+		
+		$attr = array(
+			'class' => 'category_image',
+			'alt' => 'image alt',
+			'height' => 200,
+			'title' => single_cat_title( '', false ),
+		);
+		
+		$o .= '<div class="et_pb_module et_pb_image et_pb_image_0 et_always_center_on_mobile"><span class="et_pb_image_wrap">' ;
+		$o .= '<img src="' ;
+		$o .= z_taxonomy_image_url();
+		$o .= '" alt=""/></span></div>' ;
+	} 
+	
+	/* 
+	* @since      1.0.0
+	* Display title 
+	*/    
+
 	if ( "yes" == $wporg_atts['title'] ) {
-			
-			if ( "yes" == $wporg_atts['centrer'] ) {
-				$o .= '<h1 class="entry-title main_title" style="text-align:center;">' . single_cat_title( '', false ) . "</h1>";
-			} else {
-				$o .= '<h1 class="entry-title main_title">' . single_cat_title( '', false ) . "</h1>";
-			}
+
+		$title_style = "" ;	
+	
+		if ( "yes" == $wporg_atts['centrer'] ) {
+		
+			$title_style = ' style="text-align:center;"' ;
+		}
+		
+		$o .= '<div class="et_pb_text et_pb_module et_pb_bg_layout_light et_pb_text_align_left  et_pb_text_0"><div class="et_pb_text_inner">' ;
+		$o .= '<h1 class="entry-title main_title"' . $title_style . '>' ;
+		$o .= single_cat_title( '', false ) ;
+		$o .= '</h1>' ;
+		$o .= '	</div> </div> ' ;
+		
 	} else {
 		$o .="";
 	}
 
 	if ( "yes" == $wporg_atts['description'] ) {
-		    $o .= '<div class="archive-meta">' . category_description() . "</div>";
+		
+		$o .= '<div class="et_pb_text et_pb_module et_pb_bg_layout_light et_pb_text_align_left  et_pb_text_1"><div class="et_pb_text_inner">';
+		$o .= category_description();
+		$o .='	</div></div> ';
+		
 	} else {
 		$o .="";
 	}
- 
+
+
     // end box
-    $o .= '</header>';
+    $o .= '</div> </div> </div>';
  
     // return output
     return $o;
